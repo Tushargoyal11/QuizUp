@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.postDelayed
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,8 +20,16 @@ class MainActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed(3000){
 
-            val intent=Intent(this, Login::class.java)
-            startActivity(intent)
+            if(Firebase.auth.currentUser!=null){
+
+
+                startActivity(intent)
+            }
+            else{
+                val intent=Intent(this, Login::class.java)
+                intent.putExtra("MODE","SIGNUP")
+                startActivity(intent)
+            }
 
         }
 
