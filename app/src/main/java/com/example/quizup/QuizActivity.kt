@@ -1,5 +1,6 @@
 package com.example.quizup
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -63,7 +64,10 @@ class QuizActivity : AppCompatActivity() {
 
         count++
         if(count>=list.size){
-            Toast.makeText(this@QuizActivity,score.toString(),Toast.LENGTH_LONG).show()
+            val intent= Intent(this, ScoreAcitvity::class.java)
+            intent.putExtra("Score",score)
+            startActivity(intent)
+            finish()
         }
         else {
             binding.question.setText(list.get(count).question)
