@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
             if(Firebase.auth.currentUser!=null){
 
-
+                val intent=Intent(this, QuizActivity::class.java)
                 startActivity(intent)
             }
             else{
