@@ -1,35 +1,31 @@
 package com.example.quizup
 
 import android.content.Intent
+import android.os.Binder
 import android.os.Bundle
-import android.widget.TextView
+import android.renderscript.ScriptGroup.Binding
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.airbnb.lottie.LottieAnimationView
-import com.example.quizup.databinding.ActivityScoreAcitvityBinding
+import com.example.quizup.databinding.ActivityHomePageBinding
 
-class ScoreAcitvity : AppCompatActivity() {
+class HomePage : AppCompatActivity() {
 
-    private lateinit var binding: ActivityScoreAcitvityBinding
+    private lateinit var binding:ActivityHomePageBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding=ActivityScoreAcitvityBinding.inflate(layoutInflater)
+
+        binding=ActivityHomePageBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
-
-        val lottieAnimationView: LottieAnimationView = findViewById(R.id.lottieAnimationView)
-
-        lottieAnimationView.playAnimation()
-
-        binding.score.setText("Congrats you've Completed the Quiz.\n\nYour score is: ${intent.getIntExtra("Score",0)}")
-
-
-        binding.homepage.setOnClickListener{
-           val intent=Intent(this, HomePage::class.java)
+        binding.start.setOnClickListener{
+            val intent= Intent(this,QuizActivity::class.java)
             startActivity(intent)
+
         }
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
