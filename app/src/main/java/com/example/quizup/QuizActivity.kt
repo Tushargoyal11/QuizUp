@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.quizup.databinding.ActivityQuizBinding
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class QuizActivity : AppCompatActivity() {
 
@@ -23,17 +25,29 @@ class QuizActivity : AppCompatActivity() {
         binding=ActivityQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
         list= ArrayList<QuestionModel>()
-        list.add(QuestionModel("Who is the prime minister of India","Modi ji", "Rahul Gandhi", "Amit Shah", "None","Modi ji"))
-        list.add(QuestionModel("Who is the prime minister of India","Rahul", "Modi", "Amit Shah", "None","Modi"))
-        list.add(QuestionModel("Who is the prime minister of India","Modi ji", "Rahul Gandhi", "Amit Shah", "None","Modi ji"))
-        list.add(QuestionModel("Who is the prime minister of India","Rahul", "Modi", "Amit Shah", "None","Modi"))
 
-        binding.question.setText(list.get(0).question)
-        binding.option1.setText(list.get(0).option1)
-        binding.option2.setText(list.get(0).option2)
-        binding.option3.setText(list.get(0).option3)
-        binding.option4.setText(list.get(0).option4)
 
+        Firebase.firestore.collection("Quiz").get().addOnSuccessListener {
+            doct->
+                list.clear()
+            for(i in doct.documents){
+                var questionmodel= i.toObject(QuestionModel::class.java)
+                list.add(questionmodel!!)
+            }
+
+            binding.question.setText(list.get(0).question)
+            binding.option1.setText(list.get(0).option1)
+            binding.option2.setText(list.get(0).option2)
+            binding.option3.setText(list.get(0).option3)
+            binding.option4.setText(list.get(0).option4)
+
+        }
+
+
+//        list.add(QuestionModel("Who is the prime minister of India","Modi ji", "Rahul Gandhi", "Amit Shah", "None","Modi ji"))
+//        list.add(QuestionModel("Who is the prime minister of India","Rahul", "Modi", "Amit Shah", "None","Modi"))
+//        list.add(QuestionModel("Who is the prime minister of India","Modi ji", "Rahul Gandhi", "Amit Shah", "None","Modi ji"))
+//        list.add(QuestionModel("Who is the prime minister of India","Rahul", "Modi", "Amit Shah", "None","Modi"))
         binding.option1.setOnClickListener{
             nextData(binding.option1.text.toString())
         }
